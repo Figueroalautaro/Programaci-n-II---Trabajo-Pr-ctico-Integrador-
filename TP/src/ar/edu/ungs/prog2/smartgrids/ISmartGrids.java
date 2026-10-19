@@ -157,4 +157,5 @@ public class ISmartGrids {
      * 
      */
     List<String> plantasInactivasEn(String fechaHora);
+    
 }

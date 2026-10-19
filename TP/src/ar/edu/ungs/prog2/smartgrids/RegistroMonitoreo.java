@@ -17,5 +17,12 @@ public class RegistroMonitoreo {
 	}
 	
 	
+	public int getIncidencias() {
+		return incidenciasHora;
+	}
+	
+	public double getEnergiaGeneradaHora() {
+		return energiaGeneradaHora;
+	}
 	
 }
