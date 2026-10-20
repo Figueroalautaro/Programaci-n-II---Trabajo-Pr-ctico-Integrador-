@@ -3,7 +3,7 @@ package ar.edu.ungs.prog2.smartgrids;
 import java.util.List;
 import java.util.Map;
 
-public class ISmartGrids {
+public interface ISmartGrids {
 
     /*
      * 1.a) Registran una planta con sus datos y caracteristicas.

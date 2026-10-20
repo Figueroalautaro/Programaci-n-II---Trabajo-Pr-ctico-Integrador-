@@ -8,7 +8,7 @@ public abstract class Planta {
 	private String nombre;
 	private String direccion;
 	private boolean estadoPlanta;
-	private double maxGeneracion;
+	protected double maxGeneracion;
 	private LocalDateTime fechaInicioFuncion;
 	private boolean activa;
 	
@@ -52,5 +52,9 @@ public abstract class Planta {
 	
 	public LocalDateTime getFechaInicioFuncion() {
 		return fechaInicioFuncion;
+	}
+	
+	public double getMaxGeneracion() {
+		return maxGeneracion;
 	}
 }

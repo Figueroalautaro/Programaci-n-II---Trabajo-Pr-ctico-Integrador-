@@ -1,6 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PlantaEolica extends PlantaRenovable{
 	private int cantidadAerogeneradores;
@@ -8,13 +8,17 @@ public class PlantaEolica extends PlantaRenovable{
 	private double velocidadMinimaViento;
 	
 	public PlantaEolica(String nombre, String direccion, boolean estadoPlanta, double maxGeneracion,
-			LocalDate fechaInicioFuncion, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores,
+			LocalDateTime fechaInicioFuncion, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores,
 			double alturaTorres, double velocidadMinimaViento) {
 		super(nombre, direccion, estadoPlanta, maxGeneracion, fechaInicioFuncion, fuentePrimaria, eficienciaPromedio);
 		this.cantidadAerogeneradores = cantidadAerogeneradores;
 		this.alturaTorres = alturaTorres;
 		this.velocidadMinimaViento = velocidadMinimaViento;
 	}
+	
+	
+	
+	
 	
 	
 	public boolean cumpleVelocidadMinima(double velocidad) {
@@ -25,7 +29,7 @@ public class PlantaEolica extends PlantaRenovable{
 	
 	
 	public double generacionMinimaCuota() {
-		if(eficienciaPromedio >  )
+		return getMaxGeneracion() * getEficienciaPromedio();
 	}
 	
 	public double getVelocidadMinimaViento(){

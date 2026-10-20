@@ -1,6 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class PlantaTermica extends Planta {
 	private String tipoCombustble;
@@ -8,7 +8,7 @@ public class PlantaTermica extends Planta {
 	private double capacidadAlmacenamientoCombustible;
 	
 	public PlantaTermica(String nombre, String direccion, boolean estadoPlanta, double maxGeneracion,
-			LocalDate fechaInicioFuncion, String tipoCombustble, double objetivoCO2PorHora,
+			LocalDateTime fechaInicioFuncion, String tipoCombustble, double objetivoCO2PorHora,
 			double capacidadAlmacenamientoCombustible) {
 		super(nombre, direccion, estadoPlanta, maxGeneracion, fechaInicioFuncion);
 		this.tipoCombustble = tipoCombustble;
