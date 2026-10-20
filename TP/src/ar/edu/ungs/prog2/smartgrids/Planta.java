@@ -7,17 +7,16 @@ import java.time.LocalDateTime;
 public abstract class Planta {
 	private String nombre;
 	private String direccion;
-	private boolean estadoPlanta;
-	protected double maxGeneracion;
+	//private boolean estadoPlanta;
+	private double capadidadMaxima;
 	private LocalDateTime fechaInicioFuncion;
-	private boolean activa;
+	protected boolean activa = true;
 	
-	public Planta(String nombre, String direccion, boolean activa, double maxGeneracion,
+	public Planta(String nombre, String direccion, double capadidadMaxima,
 			LocalDateTime fechaInicioFuncion) {
 		this.nombre = nombre;
 		this.direccion = direccion;
-		this.activa = activa;
-		this.maxGeneracion = maxGeneracion;
+		this.capadidadMaxima = capadidadMaxima;
 		this.fechaInicioFuncion = fechaInicioFuncion;
 	}
 	
@@ -25,18 +24,13 @@ public abstract class Planta {
 	public boolean estaActiva() {
 		return activa;
 	}
-	
 	public void activar() {
 		activa = true;
 	}
-	
 	public void desactivar() {
 		activa = false;
 	}
 	
-	public void cambiarEstado(String nombre, boolean nuevoEstado) {
-
-	}
 	
 	
 	//funciones necesarias
@@ -54,7 +48,10 @@ public abstract class Planta {
 		return fechaInicioFuncion;
 	}
 	
-	public double getMaxGeneracion() {
-		return maxGeneracion;
+	public double getCapacidadMaxima() {
+		return capadidadMaxima;
 	}
+	
+	
+	public abstract double capacidadMinimaCuota();
 }

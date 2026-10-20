@@ -2,8 +2,10 @@ package ar.edu.ungs.prog2.smartgrids;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 public class SmartGrids implements ISmartGrids {
 	private Map<String, Planta> plantas= new HashMap<>();
@@ -12,6 +14,8 @@ public class SmartGrids implements ISmartGrids {
 	//constructor
 	public SmartGrids() {}
 	
+	
+	// creacion de todas las plantas  //////////////////////
 	@Override
 	public void registrarPlantaSolar(String nombre, String direccion, double capacidadMaxima,
 			String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio,
@@ -25,7 +29,6 @@ public class SmartGrids implements ISmartGrids {
 		PlantaSolar plantaS = new PlantaSolar(
 				nombre,
 				direccion,
-				true,
 				capacidadMaxima,
 				fecha,
 				fuentePrimaria,
@@ -36,7 +39,6 @@ public class SmartGrids implements ISmartGrids {
 		plantas.put(nombre, plantaS);
 	}
 	
-	//planta eolica
 	@Override
 	public void registrarPlantaEolica(String nombre, String direccion, double capacidadMaxima,
 	        String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio,
@@ -51,7 +53,6 @@ public class SmartGrids implements ISmartGrids {
 	    PlantaEolica plantaE = new PlantaEolica(
 	            nombre, 
 	            direccion, 
-	            true,
 	            capacidadMaxima,
 	            fecha,
 	            fuentePrimaria, 
@@ -62,6 +63,75 @@ public class SmartGrids implements ISmartGrids {
 	    );
 
 	    plantas.put(nombre, plantaE);
+	}
+	
+	@Override
+	public void registrarPlantaHidraulica(String nombre, String direccion, double capacidadMaxima,
+	        String fechaHoraPuestaEnFuncionamiento, String fuentePrimaria, double eficienciaPromedio, 
+	        int cantidadTurbinas, double capacidadEmbalse) {
+
+	    if (plantas.containsKey(nombre)) {
+	        throw new RuntimeException("Nombre duplicado");
+	    }
+
+	    LocalDateTime fecha = LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento);
+
+	    PlantaHidraulica plantaH = new PlantaHidraulica(
+	            nombre, 
+	            direccion, 
+	            capacidadMaxima,
+	            fecha,
+	            fuentePrimaria, 
+	            eficienciaPromedio,
+	            cantidadTurbinas,
+	            capacidadEmbalse
+	    );
+
+	    plantas.put(nombre, plantaH);
+	}
+	
+	@Override
+	public void registrarPlantaTermica(String nombre, String direccion, double capacidadMaxima,
+	        		String fechaHoraPuestaEnFuncionamiento, String tipoCombustible ,
+	        		double objetivoEmisionesCo2PorHora, double capacidadAlmacenamientoCombustible) {
+
+	    if (plantas.containsKey(nombre)) {
+	        throw new RuntimeException("Nombre duplicado");
+	    }
+
+	    LocalDateTime fecha = LocalDateTime.parse(fechaHoraPuestaEnFuncionamiento);
+
+	    PlantaTermica plantaT = new PlantaTermica(
+	            nombre, 
+	            direccion, 
+	            capacidadMaxima,
+	            fecha,
+
+	            tipoCombustible,
+	            objetivoEmisionesCo2PorHora,
+	            capacidadAlmacenamientoCombustible
+	    );
+
+	    plantas.put(nombre, plantaT);
+	}
+	
+	////////////////////////////////////////////////////////////
+	
+	@Override
+	public List<String> consultarPlantas(){
+		List<String> consultaP = new ArrayList<>();
+		
+		for (Planta planta : plantas.values()) {
+			String estadoP;
+			
+			if (planta.estaActiva()) 
+				estadoP= "ACTIVA"; 
+			else 
+				estadoP = "INACTIVA";
+			String detalle = planta.getNombre() + "(" + estadoP +"): " + planta.getFechaInicioFuncion();
+			consultaP.add(detalle);
+		}
+		return consultaP;
 	}
 
 }

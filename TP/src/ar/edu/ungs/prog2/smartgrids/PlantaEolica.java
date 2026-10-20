@@ -7,19 +7,19 @@ public class PlantaEolica extends PlantaRenovable{
 	private double alturaTorres;
 	private double velocidadMinimaViento;
 	
-	public PlantaEolica(String nombre, String direccion, boolean estadoPlanta, double maxGeneracion,
+	public PlantaEolica(String nombre, String direccion, double capadidadMaxima,
 			LocalDateTime fechaInicioFuncion, String fuentePrimaria, double eficienciaPromedio, int cantidadAerogeneradores,
 			double alturaTorres, double velocidadMinimaViento) {
-		super(nombre, direccion, estadoPlanta, maxGeneracion, fechaInicioFuncion, fuentePrimaria, eficienciaPromedio);
+		super(nombre, direccion, capadidadMaxima, fechaInicioFuncion, fuentePrimaria, eficienciaPromedio);
 		this.cantidadAerogeneradores = cantidadAerogeneradores;
 		this.alturaTorres = alturaTorres;
 		this.velocidadMinimaViento = velocidadMinimaViento;
 	}
 	
-	
-	
-	
-	
+	@Override
+	public double capacidadMinimaCuota() {
+		return getCapacidadMaxima() * getEficienciaPromedio();
+	}
 	
 	public boolean cumpleVelocidadMinima(double velocidad) {
 		if(velocidad > velocidadMinimaViento )
@@ -28,9 +28,7 @@ public class PlantaEolica extends PlantaRenovable{
 	}
 	
 	
-	public double generacionMinimaCuota() {
-		return getMaxGeneracion() * getEficienciaPromedio();
-	}
+
 	
 	public double getVelocidadMinimaViento(){
 		return velocidadMinimaViento;

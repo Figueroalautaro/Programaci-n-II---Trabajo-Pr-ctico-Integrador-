@@ -8,18 +8,18 @@ public class PlantaSolar extends PlantaRenovable{
 	private double horasRadiacionDiaria;
 	
 	//constructor
-	public PlantaSolar(String nombre, String direccion, boolean estadoPlanta, double maxGeneracion,
+	public PlantaSolar(String nombre, String direccion, double capadidadMaxima,
 			LocalDateTime fechaInicioFuncion, String fuentePrimaria, double eficienciaPromedio, 
 			double superficieCubierta, int cantidadPaneles, double horasRadiacionDiaria) {
-		super(nombre, direccion, estadoPlanta, maxGeneracion, fechaInicioFuncion, fuentePrimaria, eficienciaPromedio);
+		super(nombre, direccion, capadidadMaxima, fechaInicioFuncion, fuentePrimaria, eficienciaPromedio);
 		this.superficieCubierta = superficieCubierta;
 		this.cantidadPaneles = cantidadPaneles;
-		horasRadiacionDiaria = horasRadiacionDiaria;
+		this.horasRadiacionDiaria = horasRadiacionDiaria;
 	}
 	
 	//@Override
-	public double capadidadMinimaCuota() {
-		return getMaxGeneracion() * getEficienciaPromedio() * horasRadiacionDiaria / 23;
+	public double capacidadMinimaCuota() {
+		return getCapacidadMaxima() * getEficienciaPromedio() * horasRadiacionDiaria / 23;
 	}
 	
 	
