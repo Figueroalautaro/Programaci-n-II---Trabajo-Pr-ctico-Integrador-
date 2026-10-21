@@ -128,10 +128,124 @@ public class SmartGrids implements ISmartGrids {
 				estadoP= "ACTIVA"; 
 			else 
 				estadoP = "INACTIVA";
-			String detalle = planta.getNombre() + "(" + estadoP +"): " + planta.getFechaInicioFuncion();
+			String detalle = planta.nombre + "(" + estadoP +"): " + planta.fechaInicioFuncion;
 			consultaP.add(detalle);
 		}
 		return consultaP;
+	}
+
+
+	@Override
+	public double capacidadMinimaCuota(String nombre) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public void activarPlanta(String nombre, String fechaHora) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void desactivarPlanta(String nombre, String fechaHora) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean estaActiva(String nombre) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias,
+			double velocidadViento) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias,
+			double co2Emitido, double combustibleUtilizado) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public double totalGenerado(String nombre) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public int[] incidenciasPorHora(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int[] histogramaCumplimiento(String nombre, String fechaDesde, String fechaHasta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Map<String, Integer> plantasRenovablesPorFuente() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<String> plantasQueNuncaCumplieronCuota() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String horasSinVelocidadMinimaPorPlantaEolica() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public int limpiarMonitoreosSinDatos() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	@Override
+	public List<String> plantasOrdenadasPorEnergiaGenerada() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<String> plantasInactivasEn(String fechaHora) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

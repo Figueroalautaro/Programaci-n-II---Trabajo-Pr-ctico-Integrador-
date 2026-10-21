@@ -15,7 +15,7 @@ public class PlantaHidraulica extends PlantaRenovable{
 	}
 	
 	public double capacidadMinimaCuota() {
-		return getCapacidadMaxima() * getEficienciaPromedio();
+		return capacidadMaxima * eficienciaPromedio;
 	}
 	
 	

@@ -3,8 +3,8 @@ package ar.edu.ungs.prog2.smartgrids;
 import java.time.LocalDateTime;
 
 public abstract class PlantaRenovable extends Planta{
-	private String fuentePrimaria;
-	private double eficienciaPromedio;
+	protected String fuentePrimaria;
+	protected double eficienciaPromedio;
 	
 	public PlantaRenovable(String nombre, String direccion, double capadidadMaxima,
 			LocalDateTime fechaInicioFuncion, String fuentePrimaria, double eficienciaPromedio) {
@@ -18,12 +18,6 @@ public abstract class PlantaRenovable extends Planta{
 	
 	
 	
-	public String getFuentePrimaria() {
-		return fuentePrimaria;
-	}
-	
-	public double getEficienciaPromedio() {
-		return eficienciaPromedio;
-	}
+
 	
 }

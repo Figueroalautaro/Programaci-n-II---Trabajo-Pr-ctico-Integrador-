@@ -18,7 +18,7 @@ public class PlantaEolica extends PlantaRenovable{
 	
 	@Override
 	public double capacidadMinimaCuota() {
-		return getCapacidadMaxima() * getEficienciaPromedio();
+		return capacidadMaxima * eficienciaPromedio;
 	}
 	
 	public boolean cumpleVelocidadMinima(double velocidad) {
