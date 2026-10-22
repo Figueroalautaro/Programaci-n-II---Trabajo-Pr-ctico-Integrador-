@@ -19,11 +19,10 @@ public class PlantaTermica extends Planta {
 	
 	@Override
     public double capacidadMinimaCuota() {
-        return capacidadMaxima / 2;
+        return capacidadMaxima / 2; 
     }
     
-    public double getObjetivoCO2PorHora() {
-    	return objetivoCO2PorHora;
-    }
+	
+	
 	
 }

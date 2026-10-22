@@ -49,15 +49,7 @@ public interface ISmartGrids {
      * @throws RuntimeException si la planta no existe
      */
     double capacidadMinimaCuota(String nombre);
-
-    /*
-     * 3) Activar, desactivar una planta y consultar si está activa. 
-     * 
-     * La actualizacion y consulta se debe resolver en O(1).
-     * 
-     * @throws RuntimeException si la planta no existe o el formato de 
-     *         fechaHora es inválido.
-     */
+    
     void activarPlanta(String nombre, String fechaHora);
 
     void desactivarPlanta(String nombre, String fechaHora);

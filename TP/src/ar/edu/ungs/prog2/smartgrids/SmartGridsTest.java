@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+
 public class SmartGridsTest {
     private static final String PUESTA = "2020-01-01T00:00:00";
     private static final String DIA1 = "2026-03-01";

@@ -1,5 +1,6 @@
 package ar.edu.ungs.prog2.smartgrids;
 
+
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.ArrayList;
@@ -9,7 +10,10 @@ import java.util.List;
 
 public class SmartGrids implements ISmartGrids {
 	private Map<String, Planta> plantas= new HashMap<>();
-	private Map<String, List<RegistroMonitoreo>> monitoreos= new HashMap<>();
+	//private Map<String, List<RegistroMonitoreo>> monitoreos= new HashMap<>();
+	
+	
+	//private Map<String, List<RegistroEstado>> estados = new HashMap<>();
 	
 	//constructor
 	public SmartGrids() {}
@@ -115,7 +119,7 @@ public class SmartGrids implements ISmartGrids {
 	    plantas.put(nombre, plantaT);
 	}
 	
-	////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@Override
 	public List<String> consultarPlantas(){
@@ -128,7 +132,8 @@ public class SmartGrids implements ISmartGrids {
 				estadoP= "ACTIVA"; 
 			else 
 				estadoP = "INACTIVA";
-			String detalle = planta.nombre + "(" + estadoP +"): " + planta.fechaInicioFuncion;
+			
+			String detalle = planta.nombre + " (" + estadoP +"): " + planta.fechaInicioFuncion;
 			consultaP.add(detalle);
 		}
 		return consultaP;
@@ -137,25 +142,31 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public double capacidadMinimaCuota(String nombre) {
-		// TODO Auto-generated method stub
-		return 0;
+		Planta planta = plantas.get(nombre);
+		
+		if(planta == null) 
+			throw new RuntimeException ("la planta no existe  " + nombre);
+		return planta.capacidadMinimaCuota();
 	}
 
 
+	
+	////activar y desactivar planta
 	@Override
 	public void activarPlanta(String nombre, String fechaHora) {
-		// TODO Auto-generated method stub
+		Planta planta = plantas.get(nombre);
+		if(planta == null )
+			throw new RuntimeException("la planta no existe  " + nombre);
 		
+		planta.activar();
 	}
-
-
 	@Override
 	public void desactivarPlanta(String nombre, String fechaHora) {
-		// TODO Auto-generated method stub
-		
+		Planta planta= plantas.get(nombre);
+		if(planta == null) 
+			throw new RuntimeException("la planta no existe  " + nombre);
+		planta.desactivar();
 	}
-
-
 	@Override
 	public boolean estaActiva(String nombre) {
 		// TODO Auto-generated method stub
@@ -163,6 +174,8 @@ public class SmartGrids implements ISmartGrids {
 	}
 
 
+	
+	/////monitoreosssssssss
 	@Override
 	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias) {
 		// TODO Auto-generated method stub
@@ -188,7 +201,10 @@ public class SmartGrids implements ISmartGrids {
 
 	@Override
 	public double totalGenerado(String nombre) {
-		// TODO Auto-generated method stub
+		Planta planta = plantas.get(nombre);
+		if(planta == null)
+			throw new RuntimeException("la planta no exite ");
+		
 		return 0;
 	}
 
@@ -247,5 +263,7 @@ public class SmartGrids implements ISmartGrids {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 
 }

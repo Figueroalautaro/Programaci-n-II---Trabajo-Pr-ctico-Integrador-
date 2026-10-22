@@ -32,16 +32,13 @@ public abstract class Planta {
 	}
 	
 	
-	
-	//funciones necesarias
-	
-
-	
-	
-	
-	//solo los GETTS NECESARIOS
-
-	
-	
+	//funciones necesaria obligatorias 
 	public abstract double capacidadMinimaCuota();
+	
+	
+	@Override
+	public String toString() {
+		return "Planta [nombre=" + nombre + ", direccion=" + direccion + ", capacidadMaxima=" + capacidadMaxima
+				+ ", fechaInicioFuncion=" + fechaInicioFuncion + ", activa=" + activa + "]";
+	}
 }
