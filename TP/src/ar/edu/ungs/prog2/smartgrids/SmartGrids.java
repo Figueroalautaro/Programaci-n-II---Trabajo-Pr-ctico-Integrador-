@@ -10,7 +10,7 @@ import java.util.List;
 
 public class SmartGrids implements ISmartGrids {
 	private Map<String, Planta> plantas= new HashMap<>();
-	//private Map<String, List<RegistroMonitoreo>> monitoreos= new HashMap<>();
+	private Map<String, List<RegistroMonitoreo>> monitoreos= new HashMap<>();
 	
 	
 	//private Map<String, List<RegistroEstado>> estados = new HashMap<>();
@@ -169,8 +169,11 @@ public class SmartGrids implements ISmartGrids {
 	}
 	@Override
 	public boolean estaActiva(String nombre) {
-		// TODO Auto-generated method stub
-		return false;
+		Planta planta = plantas.get(nombre);
+		if(planta == null) 
+			throw new RuntimeException("la planta no existe  "); 
+		
+		return planta.estaActiva();
 	}
 
 
@@ -178,25 +181,95 @@ public class SmartGrids implements ISmartGrids {
 	/////monitoreosssssssss
 	@Override
 	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias) {
-		// TODO Auto-generated method stub
+		//esto se repite siemrpe para corroborar que no haya ningun problema
+		Planta planta = plantas.get(nombre);
+		if (planta == null) 
+			throw new RuntimeException("Planta no existe");
+		else if (!planta.estaActiva())
+			throw new RuntimeException("planta inactiva ");
+		else if (fechaHora==null)
+			throw new RuntimeException("la fecha no existe ");
 		
+		LocalDateTime fecha = LocalDateTime.parse(fechaHora);
+		//no se como hacer para consultar si una fecha se puso anterior o posterior a la fecha puesta en funcion
+		
+		if(energiaGenerada < 0 || incidencias < 0) 
+			throw new RuntimeException("valores negativos");
+		monitoreos.putIfAbsent(nombre, new ArrayList<>());
+		List<RegistroMonitoreo> lista = monitoreos.get(nombre);
+		
+		
+		for(RegistroMonitoreo registro : lista) {
+			if(registro.fechaHora.equals(fecha)) 
+				throw new RuntimeException("registro duplicado"); 
+			
+		}
+		RegistroMonitoreo nuevo = new RegistroMonitoreo (planta, fecha, energiaGenerada,incidencias);
+		lista.add(nuevo);
 	}
 
 
 	@Override
 	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias,
-			double velocidadViento) {
-		// TODO Auto-generated method stub
+						double velocidadViento) {
 		
+		//esto se repite siemrpe para corroborar que no haya ningun problema
+		Planta planta = plantas.get(nombre);
+		if(planta == null) 
+			throw new RuntimeException("La planta esta duplicada");
+		if(!planta.estaActiva())
+			throw new RuntimeException("la planta esta inactiva");
+		if(fechaHora == null)
+			throw new RuntimeException("la fecha no existe");
+		
+		LocalDateTime fecha = LocalDateTime.parse(fechaHora);
+		
+		if(energiaGenerada < 0 || incidencias < 0 || velocidadViento < 0 )
+			throw new RuntimeException("Valores negativvos");
+		
+		monitoreos.putIfAbsent(nombre, new ArrayList<>());
+		List<RegistroMonitoreo> lista = monitoreos.get(nombre);
+		
+		for(RegistroMonitoreo registro : lista) {
+			if(registro.fechaHora.equals(fecha))
+				throw new RuntimeException("registro duplicado");
+		}
+		RegistroMonitoreo nuevo = new RegistroEolico(planta, fecha, energiaGenerada, incidencias, velocidadViento );
+		lista.add(nuevo);
 	}
 
 
 	@Override
 	public void registrarMonitoreo(String nombre, String fechaHora, double energiaGenerada, int incidencias,
-			double co2Emitido, double combustibleUtilizado) {
-		// TODO Auto-generated method stub
+					double co2Emitido, double combustibleUtilizado) {
 		
+		//esto se repite siemrpe para corroborar que no haya ningun problema
+		Planta planta = plantas.get(nombre);
+		if(planta == null) 
+			throw new RuntimeException("La planta esta duplicada");
+		if(!planta.estaActiva())
+			throw new RuntimeException("la planta esta inactiva");
+		if(fechaHora == null)
+			throw new RuntimeException("la fecha no existe");
+		
+		LocalDateTime fecha = LocalDateTime.parse(fechaHora);
+		
+		if(energiaGenerada < 0 || incidencias < 0 || co2Emitido < 0 || combustibleUtilizado<0)
+			throw new RuntimeException("Valores negativvos");
+		
+		monitoreos.putIfAbsent(nombre, new ArrayList<>());
+		List<RegistroMonitoreo> lista = monitoreos.get(nombre);
+		
+		for(RegistroMonitoreo registro : lista) {
+			if(registro.fechaHora.equals(fecha))
+				throw new RuntimeException("registro duplicado");
+		}
+		RegistroMonitoreo nuevo = new RegistroTermico(planta, fecha, energiaGenerada, incidencias, co2Emitido, combustibleUtilizado);
+		lista.add(nuevo);
 	}
+
+		
+	
 
 
 	@Override
@@ -205,21 +278,40 @@ public class SmartGrids implements ISmartGrids {
 		if(planta == null)
 			throw new RuntimeException("la planta no exite ");
 		
-		return 0;
+		List<RegistroMonitoreo> lista= monitoreos.get(nombre);
+		if (!planta.estaActiva() || lista==null)
+			return 0;
+		
+		double total= 0;
+		for(RegistroMonitoreo registro: lista) {
+			total+= registro.energiaGenerada;
+		}
+		return total;
 	}
 
 
 	@Override
 	public int[] incidenciasPorHora(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+		Planta planta = plantas.get(nombre);
+		if(planta == null) 
+			throw new RuntimeException("la planta no existe  "); 
+		
+		int[] resultado= new int[24]; // dice que el maximo son 24 por las hroas del dia
+		
+		List<RegistroMonitoreo> lista= monitoreos.get(nombre);
+		if(lista==null )
+			return resultado;
+		
+		
+		
+		return resultado;
 	}
 
 
 	@Override
 	public int[] histogramaCumplimiento(String nombre, String fechaDesde, String fechaHasta) {
-		// TODO Auto-generated method stub
-		return null;
+
+		
 	}
 
 

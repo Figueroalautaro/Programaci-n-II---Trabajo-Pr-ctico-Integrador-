@@ -4,25 +4,19 @@ import java.time.LocalDateTime;
 
 public class RegistroMonitoreo {
 	Planta planta;
-	private LocalDateTime fechaHoraDeRegistro;
-	private double energiaGeneradaHora;
-	private int incidenciasHora;
+	protected LocalDateTime fechaHora;
+	protected double energiaGenerada;
+	protected int incidenciasHora;
 	
 	
-	public RegistroMonitoreo (Planta planta, LocalDateTime fechaHora, double energiaGeneradaHora, int incidenciasHora){
+	public RegistroMonitoreo (Planta planta, LocalDateTime fechaHora, double energiaGenerada, int incidenciasHora){
 		this.planta = planta;
-		this.fechaHoraDeRegistro = fechaHoraDeRegistro;
-		this.energiaGeneradaHora = energiaGeneradaHora;
+		this.fechaHora = fechaHora;
+		this.energiaGenerada = energiaGenerada;
 		this.incidenciasHora = incidenciasHora;
 	}
 	
+
 	
-	public int getIncidencias() {
-		return incidenciasHora;
-	}
-	
-	public double getEnergiaGeneradaHora() {
-		return energiaGeneradaHora;
-	}
 	
 }
