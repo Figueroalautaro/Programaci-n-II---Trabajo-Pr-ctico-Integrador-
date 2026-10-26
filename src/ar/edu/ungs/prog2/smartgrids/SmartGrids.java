@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SmartGrids implements ISmartGrids {
     private Map<String, Planta> plantas = new LinkedHashMap<>();
-    // Nombre de planta -> mapa de fecha y hora -> registro.
+    
     private Map<String, Map<LocalDateTime, RegistroMonitoreo>> monitoreos = new HashMap<>();
 
     //constructor
@@ -140,9 +140,9 @@ public class SmartGrids implements ISmartGrids {
                 estado = "INACTIVA";
             }
 
-            String detalle = planta.getNombre()
+            String detalle = planta.nombre
             + " (" + estado + "): "
-            + planta.getFechaInicioFuncion().format(formato);
+            + planta.fechaInicioFuncion.format(formato);
 
             resultado.add(detalle);
         }
@@ -211,7 +211,7 @@ public class SmartGrids implements ISmartGrids {
 
         LocalDateTime fecha = LocalDateTime.parse(fechaHora);
 
-        if (fecha.compareTo(planta.getFechaInicioFuncion()) < 0) {
+        if (fecha.compareTo(planta.fechaInicioFuncion) < 0) {
             throw new RuntimeException(
             "El monitoreo es anterior a la puesta en funcionamiento");
         }
@@ -253,7 +253,7 @@ public class SmartGrids implements ISmartGrids {
 
         LocalDateTime fecha = LocalDateTime.parse(fechaHora);
 
-        if (fecha.compareTo(planta.getFechaInicioFuncion()) < 0) {
+        if (fecha.compareTo(planta.fechaInicioFuncion) < 0) {
             throw new RuntimeException(
             "El monitoreo es anterior a la puesta en funcionamiento");
         }
@@ -282,19 +282,19 @@ public class SmartGrids implements ISmartGrids {
         //esto se repite siemrpe para corroborar que no haya ningun problema
         Planta planta = plantas.get(nombre);
         if(planta == null)
-        throw new RuntimeException("La planta no existe");
+        	throw new RuntimeException("La planta no existe");
         if(!planta.estaActiva())
-        throw new RuntimeException("la planta esta inactiva");
+        	throw new RuntimeException("la planta esta inactiva");
         if(fechaHora == null)
-        throw new RuntimeException("la fecha no existe");
+        	throw new RuntimeException("la fecha no existe");
 
-        if (!(planta instanceof PlantaTermica)) {
+        if (!(planta instanceof PlantaTermica))
             throw new RuntimeException("La planta no es termica");
-        }
+        
 
         LocalDateTime fecha = LocalDateTime.parse(fechaHora);
 
-        if (fecha.compareTo(planta.getFechaInicioFuncion()) < 0) {
+        if (fecha.compareTo(planta.fechaInicioFuncion) < 0) {
             throw new RuntimeException(
             "El monitoreo es anterior a la puesta en funcionamiento");
         }
@@ -333,7 +333,7 @@ public class SmartGrids implements ISmartGrids {
         double total = 0;
 
         for (RegistroMonitoreo registro : registros.values()) {
-            total += registro.getEnergiaGenerada();
+            total += registro.energiaGenerada;
         }
 
         return total;
@@ -356,13 +356,15 @@ public class SmartGrids implements ISmartGrids {
         }
 
         for (RegistroMonitoreo registro : registros.values()) {
-            int hora = registro.getFechaHora().getHour();
+            int hora = registro.fechaHora.getHour();
 
-            resultado[hora] += registro.getIncidenciasHora();
+            resultado[hora] += registro.incidenciasHora;
         }
 
         return resultado;
     }
+    
+    //////////////////////////////////////////////////
 
     @Override
     public int[] histogramaCumplimiento(String nombre,
@@ -391,13 +393,13 @@ public class SmartGrids implements ISmartGrids {
         }
 
         for (RegistroMonitoreo registro : registros.values()) {
-            LocalDate dia = registro.getFechaHora().toLocalDate();
+            LocalDate dia = registro.fechaHora.toLocalDate();
 
             if (dia.compareTo(desde) >= 0
             && dia.compareTo(hasta) <= 0) {
 
                 if (planta.cumpleCuota(registro)) {
-                    int hora = registro.getFechaHora().getHour();
+                    int hora = registro.fechaHora.getHour();
                     resultado[hora]++;
                 }
 
@@ -415,7 +417,7 @@ public class SmartGrids implements ISmartGrids {
         for (Planta planta : plantas.values()) {
             if (planta instanceof PlantaRenovable) {
                 PlantaRenovable renovable = (PlantaRenovable) planta;
-                String fuente = renovable.getFuentePrimaria();
+                String fuente = renovable.fuentePrimaria;
 
                 if (cantidades.containsKey(fuente)) {
                     int cantidad = cantidades.get(fuente);
@@ -453,7 +455,7 @@ public class SmartGrids implements ISmartGrids {
             boolean cumplio = false;
 
             Map<LocalDateTime, RegistroMonitoreo> registros =
-            monitoreos.get(planta.getNombre());
+            monitoreos.get(planta.nombre);
 
             if (registros != null) {
                 for (RegistroMonitoreo registro : registros.values()) {
@@ -465,7 +467,7 @@ public class SmartGrids implements ISmartGrids {
             }
 
             if (!cumplio) {
-                resultado.add(planta.getNombre());
+                resultado.add(planta.nombre);
             }
         }
 
@@ -486,14 +488,14 @@ public class SmartGrids implements ISmartGrids {
                 double[] velocidadesMaximas = new double[24];
 
                 Map<LocalDateTime, RegistroMonitoreo> registros =
-                monitoreos.get(planta.getNombre());
+                monitoreos.get(planta.nombre);
 
                 if (registros != null) {
                     for (RegistroMonitoreo registro : registros.values()) {
                         RegistroEolico registroEolico =
                         (RegistroEolico) registro;
 
-                        int hora = registro.getFechaHora().getHour();
+                        int hora = registro.fechaHora.getHour();
                         double velocidad =
                         registroEolico.getVelocidadViento();
 
@@ -506,7 +508,7 @@ public class SmartGrids implements ISmartGrids {
                 }
 
                 resultado.append("- ");
-                resultado.append(planta.getNombre());
+                resultado.append(planta.nombre);
                 resultado.append(":  ");
                 resultado.append(eolica.getVelocidadMinimaViento());
                 resultado.append(" m/s\n");
@@ -544,8 +546,8 @@ public class SmartGrids implements ISmartGrids {
             while (iterador.hasNext()) {
                 RegistroMonitoreo registro = iterador.next();
 
-                if (registro.getEnergiaGenerada() == 0
-                && registro.getIncidenciasHora() == 0) {
+                if (registro.energiaGenerada == 0
+                && registro.incidenciasHora == 0) {
 
                     iterador.remove();
                     cantidadBorrados++;
@@ -562,7 +564,7 @@ public class SmartGrids implements ISmartGrids {
         Map<String, Double> totales = new HashMap<>();
 
         for (Planta planta : plantas.values()) {
-            String nombre = planta.getNombre();
+            String nombre = planta.nombre;
             double total = totalGenerado(nombre);
 
             totales.put(nombre, total);
@@ -596,7 +598,7 @@ public class SmartGrids implements ISmartGrids {
 
         for (Planta planta : plantas.values()) {
             if (planta.estuvoInactivaEn(fecha)) {
-                resultado.add(planta.getNombre());
+                resultado.add(planta.nombre);
             }
         }
 
@@ -617,7 +619,7 @@ public class SmartGrids implements ISmartGrids {
             resultado.append("\n");
 
             Map<LocalDateTime, RegistroMonitoreo> registros =
-            monitoreos.get(planta.getNombre());
+            monitoreos.get(planta.nombre);
 
             if (registros == null || registros.isEmpty()) {
                 resultado.append("  Sin monitoreos.\n");

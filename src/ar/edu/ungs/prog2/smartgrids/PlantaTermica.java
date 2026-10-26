@@ -46,10 +46,8 @@ public class PlantaTermica extends Planta {
 	public boolean cumpleCuota(RegistroMonitoreo registro) {
 	    RegistroTermico registroTermico = (RegistroTermico) registro;
 
-	    return registroTermico.getEnergiaGenerada()
-	                >= capacidadMinimaCuota()
-	            && registroTermico.getCo2Emitido()
-	                < objetivoCO2PorHora;
+	    return registroTermico.energiaGenerada >= capacidadMinimaCuota()
+	            && registroTermico.co2Emitido < objetivoCO2PorHora;
 	}
     
 	@Override

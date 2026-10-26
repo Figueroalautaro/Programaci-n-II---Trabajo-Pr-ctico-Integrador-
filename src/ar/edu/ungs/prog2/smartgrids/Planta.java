@@ -90,9 +90,7 @@ import java.util.LinkedList;
 		    }
 		
 		 public void registrarFechaMonitoreo(LocalDateTime fechaHora) {
-			    if (ultimaFechaMonitoreo == null
-			            || fechaHora.compareTo(ultimaFechaMonitoreo) > 0) {
-
+			    if (ultimaFechaMonitoreo == null || fechaHora.compareTo(ultimaFechaMonitoreo) > 0) {
 			        ultimaFechaMonitoreo = fechaHora;
 			    }
 			}
@@ -119,16 +117,9 @@ import java.util.LinkedList;
 		    }
 
 		    public boolean cumpleCuota(RegistroMonitoreo registro) {
-		        return registro.getEnergiaGenerada() >= capacidadMinimaCuota();
+		        return registro.energiaGenerada >= capacidadMinimaCuota();
 		    }
 		    
-		    public String getNombre() {
-		        return nombre;
-		    }
-
-		    public LocalDateTime getFechaInicioFuncion() {
-		        return fechaInicioFuncion;
-		    }
 
 		    public abstract double capacidadMinimaCuota();
 

@@ -31,14 +31,6 @@ public class RegistroTermico extends RegistroMonitoreo{
 	    this.combustibleUtilizado = combustibleUtilizado;
 	}
 	
-	
-	 public double getCo2Emitido() {
-	        return co2Emitido;
-	    }
-
-	    public double getCombustibleUtilizado() {
-	        return combustibleUtilizado;
-	    }
 
 	    @Override
 	    public String toString() {

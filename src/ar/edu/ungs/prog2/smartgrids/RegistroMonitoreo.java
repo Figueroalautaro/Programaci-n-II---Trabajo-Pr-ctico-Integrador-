@@ -21,7 +21,7 @@ public class RegistroMonitoreo {
 	        throw new RuntimeException("La fecha no puede ser null");
 	    }
 
-	    if (fechaHora.compareTo(planta.getFechaInicioFuncion()) < 0) {
+	    if (fechaHora.compareTo(planta.fechaInicioFuncion) < 0) {
 	        throw new RuntimeException(
 	                "El registro es anterior a la puesta en funcionamiento");
 	    }
@@ -54,17 +54,6 @@ public class RegistroMonitoreo {
         return planta;
     }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
-    }
-
-    public double getEnergiaGenerada() {
-        return energiaGenerada;
-    }
-
-    public int getIncidenciasHora() {
-        return incidenciasHora;
-    }
 
     @Override
     public String toString() {
